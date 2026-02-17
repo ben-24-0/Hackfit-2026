@@ -22,7 +22,6 @@ const INITIAL_MEMBER_DATA: MemberData = {
 };
 
 export default function RegistrationWizard() {
-  // State initialization from localStorage
   const [step, setStep] = useState<number>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? (JSON.parse(saved).step ?? 1) : 1;
@@ -61,9 +60,11 @@ export default function RegistrationWizard() {
   });
 
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
 
-  // Save draft to localStorage
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   useEffect(() => {
     const draft = {
       step,
@@ -94,6 +95,8 @@ export default function RegistrationWizard() {
     setPaymentFile(null);
     setErrors({});
     setIsSuccess(false);
+    setIsSubmitting(false);
+    setSubmitError(null);
     localStorage.removeItem(STORAGE_KEY);
   };
 
@@ -123,7 +126,7 @@ export default function RegistrationWizard() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -140,23 +143,23 @@ export default function RegistrationWizard() {
     const newErrors: Partial<Record<keyof MemberData, string>> = {};
     let isValid = true;
 
-    if (!formData.name.trim())               { newErrors.name = "Full name is required"; isValid = false; }
+    if (!formData.name.trim()) { newErrors.name = "Full name is required"; isValid = false; }
     else if (formData.name.trim().length < 2) { newErrors.name = "Name must be at least 2 characters"; isValid = false; }
 
-    if (!formData.gender)                    { newErrors.gender = "Gender is required"; isValid = false; }
-    if (!formData.institution.trim())        { newErrors.institution = "Institution is required"; isValid = false; }
-    if (!formData.semester)                  { newErrors.semester = "Semester is required"; isValid = false; }
-    if (!formData.division)                  { newErrors.division = "Division is required"; isValid = false; }
-    if (!formData.department.trim())         { newErrors.department = "Branch/Department is required"; isValid = false; }
+    if (!formData.gender) { newErrors.gender = "Gender is required"; isValid = false; }
+    if (!formData.institution.trim()) { newErrors.institution = "Institution is required"; isValid = false; }
+    if (!formData.semester) { newErrors.semester = "Semester is required"; isValid = false; }
+    if (!formData.division) { newErrors.division = "Division is required"; isValid = false; }
+    if (!formData.department.trim()) { newErrors.department = "Branch/Department is required"; isValid = false; }
 
-    if (!formData.email.trim())              { newErrors.email = "Email address is required"; isValid = false; }
+    if (!formData.email.trim()) { newErrors.email = "Email address is required"; isValid = false; }
     else if (!validateEmail(formData.email)) { newErrors.email = "Please enter a valid email address"; isValid = false; }
 
-    if (!formData.contact.trim())            { newErrors.contact = "Phone number is required"; isValid = false; }
+    if (!formData.contact.trim()) { newErrors.contact = "Phone number is required"; isValid = false; }
     else if (!validatePhone(formData.contact)) { newErrors.contact = "Please enter a valid 10-digit phone number"; isValid = false; }
 
-    if (!formData.foodPreference)            { newErrors.foodPreference = "Food preference is required"; isValid = false; }
-    if (!formData.residentialStatus)         { newErrors.residentialStatus = "Residential status is required"; isValid = false; }
+    if (!formData.foodPreference) { newErrors.foodPreference = "Food preference is required"; isValid = false; }
+    if (!formData.residentialStatus) { newErrors.residentialStatus = "Residential status is required"; isValid = false; }
 
     if (memberEntryIndex === 0 && !formData.teamName?.trim()) {
       newErrors.teamName = "Team name is required"; isValid = false;
@@ -195,17 +198,20 @@ export default function RegistrationWizard() {
 
   const handlePaymentSubmit = async () => {
     if (!teamContact.trim()) {
-      alert("Enter contact number");
+      setSubmitError("Please enter team contact number");
       return;
     }
     if (!paymentFile) {
-      alert("Upload payment screenshot");
+      setSubmitError("Please upload payment screenshot");
       return;
     }
     if (!leadData) {
-      alert("Lead data is missing. Please go back and fill Member 1 details.");
+      setSubmitError("Lead data is missing. Please go back and fill member details.");
       return;
     }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
 
     try {
       await processRegistrationSubmission(
@@ -214,14 +220,16 @@ export default function RegistrationWizard() {
         members,
         teamContact,
         paymentFile,
-        PRICES[teamSize],
+        PRICES[teamSize]
       );
 
       setIsSuccess(true);
-      resetFullForm();  // Clears form and goes back to step 1
+      localStorage.removeItem(STORAGE_KEY); // clear draft on success
 
     } catch (err: any) {
-      alert(err.message || "An error occurred during submission");
+      setSubmitError(err.message || "Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -231,7 +239,6 @@ export default function RegistrationWizard() {
     setFormData(INITIAL_MEMBER_DATA);
   };
 
-  // Helper function – now takes arguments explicitly
   const isStep2Filled = (data: MemberData, index: number): boolean => {
     if (!data.name.trim()) return false;
     if (!data.gender) return false;
@@ -423,7 +430,11 @@ export default function RegistrationWizard() {
 
           {step === 3 && (
             <div className="wizard-step-content">
-              <button className="wizard-prev-btn" onClick={prevStep}>
+              <button
+                className="wizard-prev-btn"
+                onClick={prevStep}
+                disabled={isSubmitting}
+              >
                 ← PREVIOUS
               </button>
 
@@ -431,7 +442,9 @@ export default function RegistrationWizard() {
 
               {isSuccess ? (
                 <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
-                  <h2 style={{ color: "#4caf50", marginBottom: "1.5rem" }}>🎉 Registration Successful!</h2>
+                  <h2 style={{ color: "#4caf50", marginBottom: "1.5rem" }}>
+                    🎉 Registration Successful!
+                  </h2>
                   <p>Thank you for registering your team.</p>
                   <p>You should receive confirmation shortly.</p>
                   <button
@@ -460,6 +473,7 @@ export default function RegistrationWizard() {
                     placeholder="Enter contact number"
                     value={teamContact}
                     onChange={(e) => setTeamContact(e.target.value)}
+                    disabled={isSubmitting}
                   />
 
                   <label className="wizard-label">Upload Payment Screenshot *</label>
@@ -470,10 +484,45 @@ export default function RegistrationWizard() {
                     onChange={(e) => {
                       if (e.target.files?.length) setPaymentFile(e.target.files[0]);
                     }}
+                    disabled={isSubmitting}
                   />
 
-                  <button className="wizard-next-btn" onClick={handlePaymentSubmit}>
-                    SUBMIT REGISTRATION
+                  {submitError && (
+                    <div style={{
+                      color: "#d32f2f",
+                      margin: "1.2rem 0",
+                      fontWeight: 500,
+                      background: "#ffebee",
+                      padding: "12px",
+                      borderRadius: "6px",
+                    }}>
+                      {submitError}
+                    </div>
+                  )}
+
+                  <button
+                    className="wizard-next-btn"
+                    onClick={handlePaymentSubmit}
+                    disabled={isSubmitting || !teamContact.trim() || !paymentFile}
+                    style={{
+                      opacity: isSubmitting ? 0.7 : 1,
+                      cursor: isSubmitting ? "not-allowed" : "pointer",
+                      minHeight: "52px",
+                    }}
+                  >
+                    {isSubmitting ? (
+                      <span style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "12px",
+                      }}>
+                        <span className="spinner"></span>
+                        Submitting...
+                      </span>
+                    ) : (
+                      "SUBMIT REGISTRATION"
+                    )}
                   </button>
                 </div>
               )}
