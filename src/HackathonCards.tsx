@@ -5,7 +5,7 @@ const HackathonCards = () => {
   const aboutData = {
     title: "About",
     description:
-      "HackFit 2026 is a 36-hour national-level hackathon bringing together innovative minds to solve real-world challenges using cutting-edge technology and creative problem-solving approaches.",
+      "HackFit 4.0 is a 36-hour national-level hackathon bringing together innovative minds to solve real-world challenges using cutting-edge technology and creative problem-solving approaches.",
   };
 
   const tracksData = {

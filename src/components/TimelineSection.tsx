@@ -7,25 +7,27 @@ interface TimelineItem {
   title: string;
   body: string;
   accent?: "lime" | "cyan";
+  isActive?: boolean; // New optional flag for current phase
 }
 
 const items: TimelineItem[] = [
   {
     phase: "Phase 1",
-    title: "Registration Opens",
-    body: "Form your crew, pick a track, and get your repo ready.",
+    title: "Early Bird Registration",
+    body: "Lock in your team at the best rates and secure your spot before the rush. Limited slots — register fast!",
     accent: "lime",
+    isActive: true, // ← Mark as current phase
   },
   {
     phase: "Phase 2",
-    title: "Shortlisting",
-    body: "Top teams advance with mentor feedback and checkpoints.",
+    title: "Normal Registration",
+    body: "Open to all teams. Form your crew, pick a track, and get your repo ready before the final countdown.",
     accent: "cyan",
   },
   {
     phase: "Phase 3",
     title: "Hackfit Weekend",
-    body: "48 hours of building, shipping, and demoing to the jury.",
+    body: "March 6, 6:00 PM – March 8, 6:00 AM. 36 hours of non-stop building, shipping, and demoing to the jury.",
     accent: "lime",
   },
 ];
@@ -55,7 +57,17 @@ const TimelineSection: React.FC = () => {
                 animationType={idx % 2 === 0 ? "slideInLeft" : "slideInRight"}
                 threshold={0.15}
               >
-                <div className="timeline-card">
+                <div className="timeline-card relative">
+                  {/* LIVE NOW badge for active phase */}
+                  {item.isActive && (
+                    <div className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 z-20">
+                      <span className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-lime/20 border border-lime/50 text-lime font-bold text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_15px_rgba(132,204,22,0.6)] animate-pulse">
+                        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-lime mr-1.5 sm:mr-2 shadow-[0_0_10px_rgba(132,204,22,0.8)]"></span>
+                        LIVE NOW
+                      </span>
+                    </div>
+                  )}
+
                   <div className="timeline-meta">{item.phase}</div>
                   <h3 className="timeline-title">
                     <span

@@ -12,24 +12,19 @@ interface TopicData {
 
 const topicsData: TopicData[] = [
   {
-    id: "topic 1",
-    title: "GenAI Innovation",
-    subtitle: "Explore generative AI and machine learning solutions for tomorrow.",
-    badges: ["AI/ML", "GPT", "Computer Vision"],
+    id: "topic1",
+    title: "Track 1 – Reveal Coming Soon",
+    subtitle: "Problem statements and details will be announced shortly. Stay tuned!",
+    badges: ["Coming Soon", "TBA", "Stay Tuned"],
   },
   {
     id: "topic2",
-    title: "Digital Transformation",
-    subtitle: "Build scalable solutions that modernize traditional industries.",
-    badges: ["Cloud", "API", "Automation"],
-  },
-  {
-    id: "topic 3",
-    title: "Data Science",
-    subtitle: "Transform raw data into actionable insights and predictions.",
-    badges: ["Analytics", "Python", "Visualization"],
+    title: "Track 2 – Reveal Coming Soon",
+    subtitle: "Problem statements and details will be announced shortly. Stay tuned!",
+    badges: ["Coming Soon", "TBA", "Stay Tuned"],
   },
 ];
+
 const CombinedTopicCard: React.FC<{
   topic: TopicData;
   direction: number;
@@ -72,7 +67,7 @@ const CombinedTopicCard: React.FC<{
         rotateY: { duration: 0.6 },
         scale: { duration: 0.6 },
       }}
-      className="absolute inset-0 overflow-hidden w-full h-full flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 p-4 sm:p-6 md:p-8 lg:p-12 circuit-bg-pattern bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/90"
+      className="absolute inset-0 overflow-hidden w-full h-full flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 p-4 sm:p-6 md:p-8 lg:p-12 circuit-bg-pattern bg-linear-to-br from-bgBlack via-bgBlack to-bgBlack/90"
       style={{ perspective: 1200 }}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
@@ -84,11 +79,10 @@ const CombinedTopicCard: React.FC<{
       <div className="absolute inset-0 opacity-10 glitch-overlay-anim" />
 
       <div className="flex-1 flex flex-col gap-4 md:gap-6 z-10">
-
-
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-geist font-semibold tracking-tight text-lime palette-glitch-text">
           {topic.title}
         </h2>
+
         <p className="text-sm md:text-base text-sage/85 max-w-xl font-roboto">
           {topic.subtitle}
         </p>
@@ -107,7 +101,7 @@ const CombinedTopicCard: React.FC<{
 
       <div className="flex-1 relative flex items-center justify-center z-0">
         <div
-          className="relative w-full max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md aspect-square bg-bgBlack/70 combined-card shadow-[0_0_40px_rgba(147,205,45,0.45)] overflow-hidden"
+          className="relative w-full max-w-50 sm:max-w-xs md:max-w-sm lg:max-w-md aspect-square bg-bgBlack/70 combined-card shadow-[0_0_40px_rgba(147,205,45,0.45)] overflow-hidden"
           style={{
             clipPath: "polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%)",
           }}
@@ -115,7 +109,7 @@ const CombinedTopicCard: React.FC<{
           <div className="absolute inset-0 pulse-glow-anim bg-[radial-gradient(circle_at_10%_20%,rgba(147,205,45,0.25)_0,transparent_60%),radial-gradient(circle_at_80%_80%,rgba(50,187,210,0.25)_0,transparent_60%)] mix-blend-screen" />
           <div className="absolute inset-0 glitch-overlay-anim opacity-20" />
           <div
-            className="absolute inset-[1px] bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/80"
+            className="absolute inset-px bg-linear-to-br from-bgBlack via-bgBlack to-bgBlack/80"
             style={{
               clipPath:
                 "polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%)",
@@ -128,17 +122,17 @@ const CombinedTopicCard: React.FC<{
               <div className="absolute inset-0 rounded-full border-2 border-lime/40 animate-spin-slow"></div>
               <div className="absolute inset-2 rounded-full border border-cyan/30 animate-pulse"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-lime to-cyan rounded-full animate-pulse shadow-lg"></div>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-r from-lime to-cyan rounded-full animate-pulse shadow-lg"></div>
               </div>
-              <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-lime/10 via-acid/10 to-cyan/10 blur-3xl" />
+              <div className="absolute -inset-6 rounded-full bg-linear-to-tr from-lime/10 via-acid/10 to-cyan/10 blur-3xl" />
             </div>
 
             <div className="flex flex-wrap gap-1 sm:gap-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] text-sage/60 font-roboto justify-center text-center">
-              <span>Motion Capture</span>
+              <span>Details TBA</span>
               <span className="opacity-40">•</span>
-              <span>Adaptive AI</span>
+              <span>Reveal Soon</span>
               <span className="opacity-40">•</span>
-              <span>Real-time Feedback</span>
+              <span>Stay Tuned</span>
             </div>
           </div>
         </div>
@@ -165,14 +159,12 @@ const HackathonTopicsCarousel: React.FC = () => {
     setActiveIndex(newIndex);
   };
 
-  // restart autoplay whenever activeIndex changes (keeps timing consistent after manual navigation)
   useEffect(() => {
     if (autoPlayRef.current) {
       window.clearInterval(autoPlayRef.current);
     }
 
     if (!isPaused) {
-      // slower, smooth autoplay
       autoPlayRef.current = window.setInterval(nextSlide, 6000);
     }
 
@@ -210,14 +202,14 @@ const HackathonTopicsCarousel: React.FC = () => {
               <span className="text-lime font-[impact]">Topic </span>.
             </h1>
             <p className="mt-3 text-xs sm:text-sm md:text-base text-sage/80 max-w-full sm:max-w-xl md:max-w-2xl font-roboto leading-relaxed sm:leading-relaxed">
-              Discover cutting-edge hackathon tracks designed to challenge your innovation skills and push technological boundaries.
+              Exciting challenges are coming — get ready to innovate!
             </p>
           </div>
 
           <div className="inline-flex items-center gap-3 px-3 sm:px-4 py-2 rounded-full bg-bgBlack/80 border border-sage/40 backdrop-blur-md self-start">
             <span className="w-2 h-2 rounded-full bg-lime shadow-[0_0_10px_rgba(147,205,45,0.8)] animate-pulse" />
             <span className="text-[10px] sm:text-[11px] md:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-sage/80 font-roboto">
-              Swipe, scroll or tap through the realms
+              Reveal Soon – Stay Tuned
             </span>
           </div>
         </header>
@@ -230,8 +222,7 @@ const HackathonTopicsCarousel: React.FC = () => {
                 "polygon(2% 2%, 35% 2%, 40% 8%, 98% 8%, 98% 98%, 2% 98%)",
             }}
           >
-            <div className="relative w-full h-full min-h-[449px] md:min-h-[460px] lg:min-h-[480px]">
-              {/* overlapping enter/exit for seamless transitions */}
+            <div className="relative w-full h-full min-h-112.25 md:min-h-115 lg:min-h-120">
               <AnimatePresence initial={false} custom={direction}>
                 <CombinedTopicCard
                   key={activeIndex}
@@ -261,16 +252,7 @@ const HackathonTopicsCarousel: React.FC = () => {
 
           <div className="mt-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              {/* Left gradient nav replaces the small blue/indicator buttons. Click triggers previous slide. */}
-              {/* <button
-                onClick={prevSlide}
-                className="left-gradient-nav"
-                aria-label="Previous topic"
-              >
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M15 6L9 12L15 18" stroke="#042" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button> */}
+              {/* Left gradient nav (optional) */}
             </div>
 
             <div className="flex items-center gap-3">

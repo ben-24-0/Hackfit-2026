@@ -6,7 +6,7 @@ import "./Contact.css";
 import "../HackathonCards.css";
 import logo2 from "../assets/logo2.png";
 
-// Custom logo marker icon
+
 const createLogoMarkerIcon = () => {
   return L.icon({
     iconUrl: logo2,
@@ -17,7 +17,7 @@ const createLogoMarkerIcon = () => {
   });
 };
 
-// Retarget button component
+
 function RetargetButton({
   position,
   zoom,
@@ -75,7 +75,7 @@ function RetargetButton({
 
 export default function ContactSection() {
   useEffect(() => {
-    // Fix for default marker icon
+    
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: "",
@@ -111,7 +111,7 @@ export default function ContactSection() {
                 <h3 className="card-title">Hisham Haskar</h3>
                 <div className="card-underline" />
                 <p className="person-role">Chairperson, ACM</p>
-                <p className="person-phone">+91 1234567890</p>
+                <p className="person-phone">+91 8078313514</p>
               </div>
             </div>
 
@@ -126,27 +126,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="card-wrapper">
-              <div className="file-tab"></div>
-              <div className="card-glow" />
-              <div className="card">
-                <h3 className="card-title">Jeevan Biju Korah</h3>
-                <div className="card-underline" />
-                <p className="person-role">Project Lead, FHC</p>
-                <p className="person-phone">+91 9946655199</p>
-              </div>
-            </div>
-
-            <div className="card-wrapper">
-              <div className="file-tab"></div>
-              <div className="card-glow" />
-              <div className="card">
-                <h3 className="card-title">abcd</h3>
-                <div className="card-underline" />
-                <p className="person-role">qwertyuiop</p>
-                <p className="person-phone">+91 1234567890</p>
-              </div>
-            </div>
+            
           </div>
 
           {/* Map Section */}
@@ -173,7 +153,7 @@ export default function ContactSection() {
                 >
                   <Popup>
                     <div className="custom-popup">
-                      <strong>HackFit 2026</strong>
+                      <strong>HackFit 4.0</strong>
                       <br />
                       FISAT, Angamaly
                     </div>

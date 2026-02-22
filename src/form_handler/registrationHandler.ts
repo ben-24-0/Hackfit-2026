@@ -12,15 +12,11 @@ export interface MemberData {
   teamName?: string;
 }
 
-
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
-export const uploadImageToCloudinary = async (
-  file: File
-): Promise<string> => {
+export const uploadImageToCloudinary = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
@@ -39,9 +35,8 @@ export const uploadImageToCloudinary = async (
     throw new Error(data.error?.message || "Cloudinary upload failed");
   }
 
-  return data.secure_url; 
+  return data.secure_url;
 };
-
 
 const cleanString = (str: string) => {
   if (!str) return "";
@@ -59,11 +54,8 @@ const sanitizeMember = (member: MemberData): MemberData => ({
   contact: member.contact.trim(),
   foodPreference: member.foodPreference,
   residentialStatus: member.residentialStatus,
-  teamName: member.teamName
-    ? cleanString(member.teamName)
-    : undefined,
+  teamName: member.teamName ? cleanString(member.teamName) : undefined,
 });
-
 
 export const validateImageFile = (
   file: File
@@ -97,7 +89,6 @@ export const validateImageFile = (
   return { isValid: true };
 };
 
-
 export const processRegistrationSubmission = async (
   teamSize: number,
   lead: MemberData,
@@ -106,12 +97,10 @@ export const processRegistrationSubmission = async (
   paymentFile: File,
   amount: number
 ) => {
-
   const fileCheck = validateImageFile(paymentFile);
   if (!fileCheck.isValid) {
     throw new Error(fileCheck.error);
   }
-
 
   const sanitizedLead = sanitizeMember(lead);
   const sanitizedMembers = members.map(sanitizeMember);

@@ -157,7 +157,7 @@ const PrizePodium: React.FC = () => {
           <PodiumItem
             place="2nd"
             title="2nd Place"
-            prizeAmount={50000}
+            prizeAmount={20000}
             extras=""
             height="h-[120px] sm:h-[220px] md:h-[320px] lg:h-[400px] xl:h-[480px]"
             colorClass="text-green-500"
@@ -171,7 +171,7 @@ const PrizePodium: React.FC = () => {
           <PodiumItem
             place="1st"
             title="1st Place - Grand Prize"
-            prizeAmount={100000}
+            prizeAmount={30000}
             extras=""
             height="h-[160px] sm:h-[280px] md:h-[400px] lg:h-[520px] xl:h-[640px]"
             colorClass="text-lime-400"
@@ -185,7 +185,7 @@ const PrizePodium: React.FC = () => {
           <PodiumItem
             place="3rd"
             title="3rd Place"
-            prizeAmount={25000}
+            prizeAmount={10000}
             height="h-[100px] sm:h-[180px] md:h-[280px] lg:h-[360px] xl:h-[440px]"
             colorClass="text-yellow-400"
             active={isIntersecting}

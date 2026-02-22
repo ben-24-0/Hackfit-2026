@@ -1,5 +1,13 @@
 import "./Registration.css";
 
+// Reuse the same PRICES object from RegistrationWizard.tsx
+const PRICES: Record<number, number> = { 
+  2: 1099,
+  3: 1099,
+  4: 1349,
+  5: 1599 
+};
+
 interface TeamSizeSelectorProps {
   teamSize: number;
   setTeamSize: (size: number) => void;
@@ -9,12 +17,8 @@ export default function TeamSizeSelector({
   teamSize,
   setTeamSize,
 }: TeamSizeSelectorProps) {
-  const MIN_SIZE = 3;
+  const MIN_SIZE = 2;
   const MAX_SIZE = 5;
-  const BASE_PRICE = 999;
-  const EXTRA_MEMBER_PRICE = 300;
-
-  const totalPrice = BASE_PRICE + (teamSize - MIN_SIZE) * EXTRA_MEMBER_PRICE;
 
   const decrease = () => {
     if (teamSize > MIN_SIZE) setTeamSize(teamSize - 1);
@@ -88,11 +92,15 @@ export default function TeamSizeSelector({
             ))}
           </div>
 
-          {/* Pricing */}
+          {/* Pricing - now using the correct PRICES object */}
           <div className="ts-pricing">
-            <p className="ts-price-total">TOTAL PER TEAM: ₹{totalPrice}</p>
+            <p className="ts-price-total">TOTAL PER TEAM: ₹{PRICES[teamSize]}</p>
             <p className="ts-price-extra">
-              EACH ADDITIONAL MEMBER: +₹{EXTRA_MEMBER_PRICE}
+              {teamSize > 3
+                ? `Each additional member: +₹250`
+                : teamSize === 3
+                ? "Same price as 2-member team"
+                : "Base price for team"}
             </p>
           </div>
         </div>

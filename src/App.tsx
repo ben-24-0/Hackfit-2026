@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
 import Register from "./pages/RegisterPage";
+import AdminLogin from "./components/Admin/AdminLogin";
+import AdminRegistrations from "./pages/Admin/Registration";
+import RegistrationDetail from "./pages/Admin/RegistrationDetail";
+
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
 
 const UNICORN_SDK_URL =
@@ -60,6 +65,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<Register />} />
+
+
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/registrations" element={<AdminRegistrations />} />
+        <Route path="/admin/registrations/:id" element={<RegistrationDetail />} />
       </Routes>
     </BrowserRouter>
   );

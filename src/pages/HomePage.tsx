@@ -17,27 +17,27 @@ const faqItems = [
   {
     question: "Who can register for HackFit 2026?",
     answer:
-      "Students, indie builders, and early-stage founders who can prove an active project or prototype can register. Mixed teams are welcome as long as every member is ready to build on-site.",
+      "HackFit is open exclusively to undergraduate and postgraduate students currently enrolled in recognized colleges or universities. Participants must carry a valid student ID. Mixed teams across different colleges are welcome, provided all members are eligible students and ready to build on-site.",
   },
   {
     question: "What tracks are in the 2026 edition?",
     answer:
-      "We are running GenAI Resilience, Cyber-Bio Fusion, FinSec Automation, and Sustainability Infra. Each track ships curated APIs, mentors, and telemetry dashboards.",
+      "Tracks will be revealed soon",
   },
   {
     question: "How large can each squad be?",
     answer:
-      "Teams can have three to five members. Solo sign-ups are allowed, but you will be matched with a squad during the pre-briefing sync.",
+      "Teams can have two to five members.",
   },
   {
     question: "What support is available on-site?",
     answer:
-      "24/7 mentor pods, hardware checkout, sleep bays, and power buffers are available. We also provide templates for compliance, pitch decks, and deployment scripts.",
+      "24/7 mentor pods, food and refreshments, sleep bays, and power buffers are available. ",
   },
   {
     question: "How are projects judged?",
     answer:
-      "Panels score for impact, technical execution, resilience, and storytelling. Finals are streamed with live feedback from partner labs.",
+      "Panels score for fit to the original idea, impact, technical execution, resilience, and storytelling. Finals evaluation will done by industry professionals.",
   },
 ];
 
