@@ -599,6 +599,54 @@
   box-shadow: 0 0 10px rgba(50, 187, 210, 0.9);
 }
 
+/* ============================================
+   ANIMATED PROGRESS LINE (BenefitsCard)
+   Glitchy green counter 0→100%
+   ============================================ */
+
+.progress-animated-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-track {
+  color: #93cd2d;
+  text-shadow: 0 0 6px rgba(147, 205, 45, 0.6);
+  letter-spacing: -0.5px;
+  font-size: 0.85em;
+  white-space: pre;
+}
+
+.progress-pct {
+  color: #d4e21c;
+  font-weight: 700;
+  text-shadow:
+    0 0 8px rgba(212, 226, 28, 0.7),
+    0 0 20px rgba(147, 205, 45, 0.3);
+  transition: color 0.08s, text-shadow 0.08s;
+  display: inline-block;
+  min-width: 3.2ch;
+  text-align: right;
+}
+
+/* Glitch burst state */
+.progress-glitch {
+  color: #32bbd2 !important;
+  text-shadow:
+    -2px 0 #93cd2d,
+    2px 0 #e1ce10,
+    0 0 12px rgba(50, 187, 210, 0.9) !important;
+  animation: progressGlitchShake 0.1s steps(2) infinite;
+}
+
+@keyframes progressGlitchShake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+  100% { transform: translate(1px, 1px); }
+}
+
 /* ==========================
    TIMELINE SECTION
    ========================== */

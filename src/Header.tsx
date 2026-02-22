@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
               <span className="font-[progress] text-[#d4e21c] text-lg tracking-widest uppercase">
                 Prize Pool
               </span>
-              <span className="prize-gradient font-[CyberAlert] font-bold italic text-4xl lg:text-8xl md:text-6xl text-white prize-glow leading-none">
+              <span className="prize-gradient font-[RaceSpace] font-bold italic text-4xl lg:text-8xl md:text-6xl text-white prize-glow leading-none">
                 ₹ 60K
               </span>
             </div>
